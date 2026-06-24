@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>华体会 · 传感器知识入口</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #fafaf9;
+      color: #212529;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      line-height: 1.7;
+      padding: 2rem 1.25rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .page {
+      max-width: 760px;
+      width: 100%;
+    }
+    /* 目录感标题块 */
+    .hero-toc {
+      margin-bottom: 3rem;
+      border-bottom: 1px solid #e2e2e0;
+      padding-bottom: 2rem;
+    }
+    .hero-toc h1 {
+      font-size: 2.4rem;
+      font-weight: 450;
+      letter-spacing: -0.02em;
+      color: #1a1a1a;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .hero-toc .sub {
+      color: #5c5c5c;
+      font-size: 1.05rem;
+      border-left: 3px solid #b7b7b5;
+      padding-left: 1rem;
+      margin-top: 0.4rem;
+    }
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1rem 1.5rem;
+      margin: 2rem 0 1.2rem;
+      list-style: none;
+      padding: 0;
+    }
+    .toc-grid li {
+      font-size: 0.95rem;
+      padding: 0.5rem 0 0.5rem 1.2rem;
+      border-left: 2px solid #d4d4d2;
+      color: #3a3a3a;
+    }
+    .toc-grid li span {
+      display: block;
+      font-size: 0.75rem;
+      color: #8a8a88;
+      margin-top: 0.1rem;
+    }
+    /* 说明区卡片 */
+    .info-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 1.8rem 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02), 0 8px 24px rgba(0,0,0,0.02);
+      border: 1px solid #ecece9;
+    }
+    .info-card h2 {
+      font-size: 1.4rem;
+      font-weight: 450;
+      margin-bottom: 1.2rem;
+      color: #1e1e1e;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .info-card h2::before {
+      content: "▍";
+      color: #a0a09c;
+      font-weight: 300;
+      font-size: 1.6rem;
+      line-height: 1;
+    }
+    .info-card p {
+      margin-bottom: 1rem;
+      color: #2e2e2e;
+    }
+    .info-card p:last-child {
+      margin-bottom: 0;
+    }
+    .inline-link {
+      color: #2c5f2d;
+      text-decoration: none;
+      border-bottom: 1px solid #bdd0bd;
+      transition: border-color 0.15s, color 0.15s;
+      font-weight: 450;
+    }
+    .inline-link:hover {
+      border-bottom-color: #2c5f2d;
+      color: #1f451f;
+    }
+    /* 提示区 */
+    .note-area {
+      background: #f4f4f2;
+      border-radius: 28px;
+      padding: 1.6rem 2rem;
+      margin: 2.5rem 0;
+      border: 1px solid #e0dfdb;
+    }
+    .note-area h3 {
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #5a5a58;
+      font-weight: 400;
+      margin-bottom: 0.8rem;
+    }
+    .note-area ul {
+      list-style: none;
+      padding: 0;
+    }
+    .note-area li {
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed #d2d1cd;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+    .note-area li:last-child {
+      border-bottom: none;
+    }
+    .note-area li::before {
+      content: "·";
+      color: #80807b;
+      font-weight: 700;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+    /* 相关信息区 FAQ 摘要风格 */
+    .related-section {
+      margin: 2.8rem 0;
+    }
+    .related-section h2 {
+      font-size: 1.3rem;
+      font-weight: 450;
+      color: #1e1e1e;
+      margin-bottom: 1.5rem;
+      border-top: 1px solid #e2e2e0;
+      padding-top: 1.8rem;
+    }
+    .qa-item {
+      margin-bottom: 1.2rem;
+    }
+    .qa-item strong {
+      display: block;
+      font-weight: 500;
+      color: #1d2b1d;
+      margin-bottom: 0.2rem;
+      font-size: 1rem;
+    }
+    .qa-item p {
+      margin-left: 0.8rem;
+      color: #3d3d3b;
+      font-size: 0.95rem;
+      border-left: 1px solid #d8d8d4;
+      padding-left: 1rem;
+    }
+    .meta-note {
+      margin-top: 2.5rem;
+      padding: 1.2rem 0;
+      border-top: 1px solid #eaeae6;
+      font-size: 0.85rem;
+      color: #6f6f6b;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #ebebe7;
+      margin: 2.2rem 0;
+    }
+    a:focus-visible {
+      outline: 2px solid #2c5f2d;
+      outline-offset: 3px;
+    }
+    @media (max-width: 500px) {
+      body { padding: 1.25rem 1rem; }
+      .hero-toc h1 { font-size: 1.9rem; }
+      .info-card { padding: 1.4rem; }
+      .note-area { padding: 1.2rem; }
+      .toc-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <!-- hero + 目录感 -->
+  <div class="hero-toc">
+    <h1>华体会 · 简明指南</h1>
+    <div class="sub">传感器技术参考 · 常见问题 · 使用提醒</div>
+    <ul class="toc-grid">
+      <li>测量原理概述<span>基础概念与选型</span></li>
+      <li>通讯与接口<span>模拟/数字/IoT</span></li>
+      <li>安装与布线<span>环境适配注意</span></li>
+      <li>校准与维护<span>长期稳定性</span></li>
+      <li>故障排除<span>常见代码与排查</span></li>
+    </ul>
+    <p style="font-size:0.9rem; color:#7c7c78; margin-top: 0.2rem;">以上为知识库目录结构，展开内容请参考具体文档。</p>
+  </div>
+
+  <!-- 说明区：从简明指南角度 -->
+  <div class="info-card">
+    <h2>基础说明</h2>
+    <p>本页面为 <a href="https://hthsensor.com.cn" class="inline-link">华体会</a> 知识库的轻量入口，面向技术人员与集成商。内容聚焦于常用传感器（温度、湿度、气体、压力、液位）的选型、接线、配置和初步诊断。所有信息均基于通用参考与公开资料整理，不替代专业工程师的现场判断。</p>
+    <p>如果你刚开始接触传感器数据采集，建议从通讯协议（4-20 mA / RS-485 / 0-10V / Modbus）入手；之后逐步了解滤波、供电隔离与信号转换。多数使用问题源于接线极性错误或供电不足，请优先检查这两项。</p>
+  </div>
+
+  <!-- 提示区：访问提醒 -->
+  <div class="note-area">
+    <h3>访问提醒 · 使用建议</h3>
+    <ul>
+      <li>操作前断开电源，切勿带电接线；静电敏感器件需采取防护。</li>
+      <li>传感器量程应覆盖测量上限的1.2～1.5倍，避免长期过限。</li>
+      <li>室外或潮湿环境请选用IP65及以上防护等级，并考虑防雷。</li>
+      <li>首次读数偏差属于正常现象，待稳定15~30分钟后再记录。</li>
+      <li>数据库与驱动版本请以  华体会  官网最新发布为准。</li>
+    </ul>
+  </div>
+
+  <!-- 相关信息区：FAQ 摘要 + 补充 -->
+  <div class="related-section">
+    <h2>相关信息摘要</h2>
+    <div class="qa-item">
+      <strong>Q: 如何确认输出信号类型？</strong>
+      <p>查看铭牌或订货代码：A表示4-20mA，V表示0-10V，R表示RS-485。若不确定，可用万用表电压档测量（信号线对地）。详情可查阅 <a href="https://hthsensor.com.cn" class="inline-link">华体会</a> 产品手册。</p>
+    </div>
+    <div class="qa-item">
+      <strong>Q: 为什么数值异常跳变？</strong>
+      <p>先检查屏蔽层接地与线缆是否与动力线并行走线；其次排查电源纹波（建议使用隔离电源模块）。部分传感器需在软件中启用数字滤波。</p>
+    </div>
+    <div class="qa-item">
+      <strong>Q: 是否需要定期校准？</strong>
+      <p>工业场景建议每6~12个月做一次零点及满量程校准。可送回原厂或使用标准源比对。家居 / 轻商用环境可延至2年。</p>
+    </div>
+    <div style="margin-top: 1.8rem; padding: 0.8rem 1.2rem; background: #f7f7f5; border-radius: 16px;">
+      <p style="font-size:0.9rem; margin:0;">更多FAQ内容正在整理更新，你也可以直接搜索关键字「华体会 传感器 知识库」获取最新版本。本入口页仅作为结构化指引，具体参数请以官方文档为准。</p>
+    </div>
+  </div>
+
+  <!-- 元信息 / 脚注 -->
+  <div class="meta-note">
+    <span>华体会 · 知识库入口</span>
+    <span>版本参考 · 内容定期修订</span>
+  </div>
+</div>
+</body>
+</html>
