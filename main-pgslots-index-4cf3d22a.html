@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pg游戏 · 专题浏览页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f3f9fc;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #1a2d3a;
+            line-height: 1.7;
+            padding: 0 16px;
+        }
+
+        .wrapper {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 40px 0 60px;
+        }
+
+        /* hero 横幅 */
+        .hero {
+            background: linear-gradient(145deg, #d6f0f5 0%, #bbdfe8 100%);
+            border-radius: 32px;
+            padding: 48px 32px 40px;
+            margin-bottom: 48px;
+            box-shadow: 0 12px 24px -12px rgba(0, 60, 70, 0.18);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 240px;
+            height: 240px;
+            background: rgba(45, 155, 160, 0.06);
+            border-radius: 50%;
+            top: -60px;
+            right: -60px;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            color: #0b313a;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero p {
+            margin-top: 12px;
+            font-size: 1.1rem;
+            color: #1f4a57;
+            max-width: 580px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero .badge {
+            display: inline-block;
+            background: #0f4a54;
+            color: #e2f3f7;
+            font-size: 0.8rem;
+            padding: 4px 14px;
+            border-radius: 40px;
+            margin-top: 18px;
+            letter-spacing: 0.3px;
+        }
+
+        /* 卡片网格 */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 28px;
+            margin: 40px 0 48px;
+        }
+
+        @media (min-width: 600px) {
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 28px 26px 30px;
+            box-shadow: 0 6px 14px rgba(0, 50, 55, 0.04);
+            border: 1px solid rgba(130, 190, 195, 0.18);
+            transition: box-shadow 0.2s, transform 0.15s;
+        }
+
+        .card:hover {
+            box-shadow: 0 12px 28px -8px rgba(0, 80, 85, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .card .icon {
+            font-size: 1.8rem;
+            line-height: 1;
+            margin-bottom: 10px;
+            display: block;
+            color: #25828f;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #12343e;
+        }
+
+        .card p {
+            font-size: 0.98rem;
+            color: #2d4d58;
+            margin-bottom: 14px;
+        }
+
+        .card .meta {
+            font-size: 0.85rem;
+            color: #5d7983;
+            border-top: 1px solid #e6f0f2;
+            padding-top: 12px;
+            margin-top: 4px;
+        }
+
+        /* 三段自然介绍区域 */
+        .essay-section {
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 36px 30px 40px;
+            margin-bottom: 42px;
+            box-shadow: 0 4px 12px rgba(0, 30, 35, 0.02);
+            border: 1px solid #d9e9ed;
+        }
+
+        .essay-section h2 {
+            font-weight: 450;
+            font-size: 1.6rem;
+            color: #0b353f;
+            margin-bottom: 20px;
+            letter-spacing: -0.01em;
+        }
+
+        .essay-section .para {
+            margin-bottom: 24px;
+        }
+
+        .essay-section .para:last-child {
+            margin-bottom: 0;
+        }
+
+        .essay-section .para p {
+            margin-bottom: 12px;
+        }
+
+        .essay-section .para .highlight {
+            background: #d9f0f4;
+            padding: 0 6px;
+            border-radius: 4px;
+            color: #0b3b44;
+        }
+
+        .inline-link {
+            color: #10707d;
+            text-decoration: none;
+            font-weight: 500;
+            border-bottom: 1px solid #b2d5db;
+            transition: border-color 0.15s, color 0.15s;
+        }
+
+        .inline-link:hover {
+            border-bottom-color: #10707d;
+            color: #064753;
+        }
+
+        /* faq 摘要样 */
+        .faq-mini {
+            background: #eef7f9;
+            border-radius: 20px;
+            padding: 24px 26px;
+            margin: 30px 0 20px;
+            border-left: 4px solid #21828f;
+        }
+
+        .faq-mini dt {
+            font-weight: 500;
+            color: #06323d;
+            margin-bottom: 4px;
+        }
+
+        .faq-mini dd {
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+            color: #1f4450;
+        }
+
+        .faq-mini dd:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 页尾访问提示 */
+        .footer-note {
+            text-align: center;
+            padding: 32px 18px 10px;
+            border-top: 1px solid #c6dee3;
+            margin-top: 20px;
+        }
+
+        .footer-note p {
+            font-size: 0.95rem;
+            color: #2a535f;
+            max-width: 480px;
+            margin: 0 auto 12px;
+        }
+
+        .footer-note .suffix {
+            color: #577b85;
+            font-size: 0.85rem;
+        }
+
+        .footer-note a {
+            color: #0b5f6d;
+            font-weight: 500;
+        }
+
+        /* 移动端微调 */
+        @media (max-width: 480px) {
+            .hero {
+                padding: 36px 22px 32px;
+            }
+
+            .hero h1 {
+                font-size: 1.7rem;
+            }
+
+            .essay-section {
+                padding: 28px 18px 30px;
+            }
+
+            .card {
+                padding: 22px 18px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+
+    <!-- hero 横幅 -->
+    <header class="hero">
+        <h1>日常对照 · 专题记录</h1>
+        <p>整理一些关于 pg 游戏的内容线索，方便随手翻阅与延伸了解。</p>
+        <span class="badge">浏览向 · 非即时数据</span>
+    </header>
+
+    <!-- 网格卡片：对照+延伸阅读 -->
+    <div class="grid">
+        <div class="card">
+            <span class="icon">📋</span>
+            <h3>条目对照</h3>
+            <p>在探索不同平台与界面时，经常需要回头核对一些基础说明。一个稳定的索引入口能让查找更安静。</p>
+            <div class="meta">常用作对照参考</div>
+        </div>
+        <div class="card">
+            <span class="icon">📎</span>
+            <h3>延伸阅读</h3>
+            <p>从一则短介绍出发，可以关联到界面逻辑、分类习惯与浏览方式。这类延伸整理往往比单独一篇说明更有用。</p>
+            <div class="meta">笔记式扩展</div>
+        </div>
+        <div class="card">
+            <span class="icon">🔄</span>
+            <h3>浏览节奏</h3>
+            <p>信息获取不必急促。把页面当作一个安静的角落，每次只读一小段，保持自己的节奏就很好。</p>
+            <div class="meta">自我步调</div>
+        </div>
+        <div class="card">
+            <span class="icon">📌</span>
+            <h3>场景备注</h3>
+            <p>无论是快速查阅还是稍后细读，一个干净的结构都能减少干扰。此处仅作为场景记录。</p>
+            <div class="meta">轻量记录</div>
+        </div>
+    </div>
+
+    <!-- 三段自然介绍（专题式） -->
+    <div class="essay-section">
+        <h2>从日常查询到内容对照</h2>
+        <div class="para">
+            <p>
+                最初只是想在浏览间隙找到一段清晰的说明。后来发现，与其每次重新搜索，不如保留一个自己熟悉的页面结构。
+                这个专题页并不是资讯聚合，更像是一个<strong class="highlight">阅读辅助</strong>——在你需要的时候，提供一些基本条目和对照参考。
+            </p>
+            <p>
+                比如关于 <a href="https://main-pgslots.com" class="inline-link">pg游戏</a> 的一些基础介绍和常见分类，在这类页面里被整理成卡片和段落。
+                不需要跳转太多层级，也不必面对复杂的导航。它更像是手边一本折了角的杂志，随手翻开就能继续。
+            </p>
+        </div>
+        <div class="para">
+            <p>
+                第二条线索是关于<strong>延伸阅读的习惯</strong>。有时候我们点开一个页面，只是想确认某个细节，
+                但被信息流推着越走越远。这个页面刻意保持平缓的叙事，三段介绍各自独立，读完一段可以停下来，
+                也可以顺着链接再往前一步。例如在页面的下方，同样保留了一个指向
+                <a href="https://main-pgslots.com" class="inline-link">pg游戏</a> 的安静入口，仅作为索引存在。
+            </p>
+        </div>
+        <div class="para">
+            <p>
+                第三段关于<strong>页面的存在感</strong>。太多网站希望用户快速完成某个动作，
+                但这个页面的意图更接近“放一本书在桌上”。卡片、背景、蓝绿色的点缀都只是为了阅读舒适，
+                没有任何催促。如果你需要更完整的原始信息，可以在任何方便的时候通过链接跳转。
+                链接文本保持简洁，比如“<a href="https://main-pgslots.com" class="inline-link">pg游戏</a>”就是它本身的名字。
+            </p>
+        </div>
+
+        <!-- FAQ 摘要 -->
+        <dl class="faq-mini">
+            <dt>❓ 这个页面会频繁更新吗？</dt>
+            <dd>不保证实时更新。它更像一篇静态专题，内容结构固定，适合作为中长期参照。</dd>
+            <dt>❓ 卡片里的内容代表什么？</dt>
+            <dd>每个卡片对应一个常见的浏览场景，比如对照、延伸、场景备注，全部基于日常使用习惯整理。</dd>
+            <dt>❓ 链接直接指向哪里？</dt>
+            <dd>页面内所有指向 <a href="https://main-pgslots.com" class="inline-link">pg游戏</a> 的链接均保持文本一致，仅作为自然跳转。</dd>
+        </dl>
+    </div>
+
+    <!-- 页尾访问提示 -->
+    <footer class="footer-note">
+        <p>
+            如果需要进一步浏览或对照原始内容，可以在需要时直接通过链接前往
+            <a href="https://main-pgslots.com">pg游戏</a>。本页仅作为杂志式专题入口，不构成任何引导。
+        </p>
+        <span class="suffix">—— 安静翻阅 · 对照延伸 ——</span>
+    </footer>
+
+</div>
+</body>
+</html>
